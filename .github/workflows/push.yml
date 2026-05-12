@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Push frontend to S3
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "push"
+  push:
+    # The type of runner that the job will run on
+    runs-on: amazon/aws-cli
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Check login
+        run: |
+          ${{ secrets.SECRET_NAME }}
+          aws sts get-caller-identity
+
+      - name: Checkout frontend repo
+        uses: actions/checkout@v4
+        with:
+          repository: YaSielDeda/newcanada2
+          path: /
+
+      # Runs a set of commands using the runners shell
+      - name: Push
+        run: |
+          aws s3 sync ./ s3://newcanada2.de --delete
