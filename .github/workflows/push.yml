@@ -19,9 +19,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Check login
-        run: |
-          ${{ secrets.SECRET_NAME }}
-          aws sts get-caller-identity
+        run: aws sts get-caller-identity
 
       - name: Checkout frontend repo
         uses: actions/checkout@v4
@@ -31,5 +29,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Push
-        run: |
-          aws s3 sync ./ s3://newcanada2.de --delete
+        run: aws s3 sync ./ s3://newcanada2.de --delete
