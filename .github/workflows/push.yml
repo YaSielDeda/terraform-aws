@@ -34,8 +34,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: YaSielDeda/newcanada2
-          path: /
+          path: frontend
 
       # Runs a set of commands using the runners shell
       - name: Push
-        run: aws s3 sync ./ s3://newcanada2.de --delete
+        run: aws s3 sync ./frontend s3://newcanada2.de --delete
